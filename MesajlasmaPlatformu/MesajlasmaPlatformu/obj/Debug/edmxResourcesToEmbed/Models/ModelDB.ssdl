@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB03Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="GroupMember">
+    <Key>
+      <PropertyRef Name="gmId" />
+    </Key>
+    <Property Name="gmId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="gmgrupId" Type="int" Nullable="false" />
+    <Property Name="gmuserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Grup">
+    <Key>
+      <PropertyRef Name="grupId" />
+    </Key>
+    <Property Name="grupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="grupAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="olusturanId" Type="int" />
+    <Property Name="tarih" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Mesaj">
+    <Key>
+      <PropertyRef Name="messageId" />
+    </Key>
+    <Property Name="messageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="senderId" Type="int" Nullable="false" />
+    <Property Name="recipientId" Type="int" Nullable="false" />
+    <Property Name="grupmesajId" Type="int" />
+    <Property Name="content" Type="nvarchar(max)" />
+    <Property Name="mesajtarih" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="userPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="userEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_GroupMember_ToGrup">
+    <End Role="Grup" Type="Self.Grup" Multiplicity="1" />
+    <End Role="GroupMember" Type="Self.GroupMember" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grup">
+        <PropertyRef Name="grupId" />
+      </Principal>
+      <Dependent Role="GroupMember">
+        <PropertyRef Name="gmgrupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GroupMember_ToUser">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="GroupMember" Type="Self.GroupMember" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="GroupMember">
+        <PropertyRef Name="gmuserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Grup_ToUser">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Grup" Type="Self.Grup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Grup">
+        <PropertyRef Name="olusturanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrupMesaj_ToGrup">
+    <End Role="Grup" Type="Self.Grup" Multiplicity="0..1" />
+    <End Role="Mesaj" Type="Self.Mesaj" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grup">
+        <PropertyRef Name="grupId" />
+      </Principal>
+      <Dependent Role="Mesaj">
+        <PropertyRef Name="grupmesajId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Recipient_ToUser">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Mesaj" Type="Self.Mesaj" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Mesaj">
+        <PropertyRef Name="recipientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sender_ToUser">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Mesaj" Type="Self.Mesaj" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Mesaj">
+        <PropertyRef Name="senderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB03ModelStoreContainer">
+    <EntitySet Name="GroupMember" EntityType="Self.GroupMember" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Grup" EntityType="Self.Grup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Mesaj" EntityType="Self.Mesaj" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_GroupMember_ToGrup" Association="Self.FK_GroupMember_ToGrup">
+      <End Role="Grup" EntitySet="Grup" />
+      <End Role="GroupMember" EntitySet="GroupMember" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GroupMember_ToUser" Association="Self.FK_GroupMember_ToUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="GroupMember" EntitySet="GroupMember" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Grup_ToUser" Association="Self.FK_Grup_ToUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="Grup" EntitySet="Grup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrupMesaj_ToGrup" Association="Self.FK_GrupMesaj_ToGrup">
+      <End Role="Grup" EntitySet="Grup" />
+      <End Role="Mesaj" EntitySet="Mesaj" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Recipient_ToUser" Association="Self.FK_Recipient_ToUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="Mesaj" EntitySet="Mesaj" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sender_ToUser" Association="Self.FK_Sender_ToUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="Mesaj" EntitySet="Mesaj" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

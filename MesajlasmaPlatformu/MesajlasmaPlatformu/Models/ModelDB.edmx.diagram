@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="01fdec57399d4e0a8fc6d99e00b7fa92" Name="Diagram1">
+        <EntityTypeShape EntityType="DB03Model.GroupMember" Width="1.5" PointX="6" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB03Model.Grup" Width="1.5" PointX="3.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB03Model.Mesaj" Width="1.5" PointX="6" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB03Model.User" Width="1.5" PointX="1.5" PointY="3.375" IsExpanded="true" />
+        <AssociationConnector Association="DB03Model.FK_GroupMember_ToGrup" ManuallyRouted="false" />
+        <AssociationConnector Association="DB03Model.FK_GroupMember_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="DB03Model.FK_Grup_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="DB03Model.FK_GrupMesaj_ToGrup" ManuallyRouted="false" />
+        <AssociationConnector Association="DB03Model.FK_Recipient_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="DB03Model.FK_Sender_ToUser" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
